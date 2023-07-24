@@ -40,7 +40,7 @@ namespace ASCIIArt
                         }
 
                     int averageAlpha = averageAlphaArray.Aggregate((a, b) => a + b) / averageAlphaArray.Count;
-                    int average = averageArray.Aggregate((a, b) => a + b) / averageArray.Count * (averageAlpha / 255);
+                    int average = averageArray.Aggregate((a, b) => a + b) / averageArray.Count / (averageAlpha / 255);
 
                     float shade = 225 / Charset.Length;
                     char character = (char)0;

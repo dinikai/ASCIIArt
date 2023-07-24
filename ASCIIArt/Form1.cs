@@ -33,7 +33,7 @@ namespace ASCIIArt
             {
                 OpenFileDialog openFileDialog = new()
                 {
-                    Filter = "Image files (*.png, *.jpg, *.gif)|*.png;*.jpg;*.gif"
+                    Filter = "Image files (*.png, *.jpg, *.gif)|*.png;*.jpg;*.gif|All files (*.*)|*.*"
                 };
 
                 if (openFileDialog.ShowDialog() != DialogResult.OK)
@@ -58,15 +58,23 @@ namespace ASCIIArt
                     return;
                 }
 
+                if (width <= 0)
+                    return;
+
                 ASCIIArtGenerator artGenerator = new(charsetText.Text);
-                Task<string> artTask = artGenerator.DrawArtAsync(fileText.Text, width, repeat);
+                try
+                {
+                    Task<string> artTask = artGenerator.DrawArtAsync(fileText.Text, width, repeat);
+                    ArtForm artForm = new();
+                    artForm.ArtText = "Drawing...";
+                    artForm.Show();
 
-                ArtForm artForm = new();
-                artForm.ArtText = "Drawing...";
-                artForm.Show();
+                    string art = await artTask;
+                    artForm.ArtText = art;
+                } catch
+                {
 
-                string art = await artTask;
-                artForm.ArtText = art;
+                }
             };
 
             charsetList.SelectedIndexChanged += (sender, e) =>
