@@ -20,7 +20,7 @@ namespace ASCIIArt
         {
             Bitmap bitmap = await Task.Run(() => new Bitmap(path));
 
-            int span = bitmap.Width / width * 2;
+            int span = bitmap.Width / width * repeat;
             if (span < 1)
                 span = 1;
             string art = "";
